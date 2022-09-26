@@ -1,0 +1,8 @@
+
+<resources>
+    <string name="app_name">CalcUPeUX</string>
+    <string name="app_namex">Holas</string>
+    <string name="app_namexy">Probar</string>
+    <string name="app_telefono">Téléphoner:</string>
+    <string name="app_nombre">Nom:</string>
+</resources>
