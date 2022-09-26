@@ -3,6 +3,8 @@ package pe.edu.upeu.proyectovcmjc.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -10,6 +12,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -35,6 +38,34 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
+)
+
+private val DarkColorPalette = darkColors(
+    primary = BLUE900,
+    primaryVariant = BLUE950,
+    secondary = CYAN900,
+    secondaryVariant = CYAN800,
+    background = BLUEGREY900,
+    surface = BLUEGREY800,
+    error = RED800,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White,
+    onError = Color.White
+)
+private val LightColorPalette = lightColors(
+    primary = Blue500,
+    primaryVariant = BLUE800,
+    secondary = CYAN500,
+    secondaryVariant = CYAN700,
+    background = LIGHTBLUE50,
+    surface = LIGHTBLUE100,
+    error = RED600,
+    onPrimary = Color.Black,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,onError = Color.Black
 )
 
 @Composable
