@@ -24,5 +24,5 @@ interface RestDataSource {
     suspend fun insertarPersona(@Body persona: Persona):Response<MsgModelResponse>
 
     @GET("/api/auth/login")
-    suspend fun login(@Body user: User):Response<UserResponse>
+    fun login(@Body user: User):Response<UserResponse>
 }

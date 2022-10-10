@@ -10,7 +10,7 @@ data class Persona(
     @ColumnInfo(name = "dni") var dni:String,
     var nombre:String,
     @ColumnInfo(name = "apellido_paterno") var apellidoPaterno:String,
-    @ColumnInfo(name = "apellido_materno") var apellido_materno:String,
+    @ColumnInfo(name = "apellido_materno") var apellidoMaterno:String,
     var telefono:String,
     var genero:String,
     var correo:String

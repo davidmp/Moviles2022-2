@@ -5,11 +5,12 @@ import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
+//import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import pe.edu.upeu.proyectovcmjc.ui.navigation.Destinations.*
 import pe.edu.upeu.proyectovcmjc.ui.presentation.screens.*
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-
+import pe.edu.upeu.proyectovcmjc.ui.presentation.screens.persona.PersonaUI
 
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -56,6 +57,10 @@ fun NavigationHost(
 
         composable(Pantalla4.route) {
             Pantalla4()
+        }
+
+        composable(Destinations.PersonaUI.route){
+            PersonaUI()
         }
 
     }
