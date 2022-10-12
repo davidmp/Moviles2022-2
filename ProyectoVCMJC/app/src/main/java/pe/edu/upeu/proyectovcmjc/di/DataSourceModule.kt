@@ -22,7 +22,7 @@ class DataSourceModule {
     @Singleton
     @Provides
     @Named("BaseUrl")
-    fun provideBaseUrl()="http://10.80.98.189:8080/"
+    fun provideBaseUrl()="http://172.23.11.22:8000/"
 
     @Singleton
     @Provides

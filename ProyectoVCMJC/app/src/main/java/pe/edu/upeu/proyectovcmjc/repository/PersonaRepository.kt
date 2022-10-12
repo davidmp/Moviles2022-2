@@ -2,7 +2,10 @@ package pe.edu.upeu.proyectovcmjc.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import pe.edu.upeu.proyectovcmjc.data.local.dao.PersonaDao
 import pe.edu.upeu.proyectovcmjc.data.remote.RestDataSource
 import pe.edu.upeu.proyectovcmjc.modelo.Persona
@@ -23,12 +26,18 @@ class PersonaRepositoryImp @Inject constructor(
 
     override fun reportarPersonas(): LiveData<List<Persona>> {
         //delay(3000)
-        val totek=dataSource.login(User("", "davidmp@upeu.edu.pe", "d123456"))
-        TokenUtils.TOKEN_CONTENT=totek.body()?.token_type+" "+totek.body()?.access_token
-        Log.i("VERX", "Token:"+TokenUtils.TOKEN_CONTENT)
-
-        val data=dataSource.reportarPersona(TokenUtils.TOKEN_CONTENT).body()!!.data
-        personaDao.insetarPersonas(data)
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                delay(3000)
+                val totek=dataSource.login(User("", "davidmp@upeu.edu.pe", "d123456"))
+                TokenUtils.TOKEN_CONTENT=totek?.token_type+" "+totek?.access_token
+                Log.i("VERX", "Token:"+TokenUtils.TOKEN_CONTENT)
+                val data=dataSource.reportarPersona(TokenUtils.TOKEN_CONTENT).body()!!.data
+                personaDao.insetarPersonas(data)
+            }
+        }catch (e:Exception){
+            Log.i("ERRORX", "Error:"+e.message)
+        }
         return personaDao.reportarPersonas()
     }
 
