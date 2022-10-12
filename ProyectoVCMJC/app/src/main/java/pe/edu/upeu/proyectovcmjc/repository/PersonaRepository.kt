@@ -16,13 +16,21 @@ import javax.inject.Inject
 interface PersonaRepository {
     suspend fun deletePersona(persona: Persona)
     fun reportarPersonas():LiveData<List<Persona>>
+    fun buscarPersonaId(id:Int):LiveData<Persona>
+    suspend fun insertarPersona(persona: Persona)
+
 }
 
 class PersonaRepositoryImp @Inject constructor(
     private val dataSource:RestDataSource,
     private val personaDao: PersonaDao
 ):PersonaRepository{
-    override suspend fun deletePersona(persona: Persona)=personaDao.eliminarPersona(persona)
+    override suspend fun deletePersona(persona: Persona){
+        CoroutineScope(Dispatchers.IO).launch {
+            dataSource.deletePersona(persona.id)
+        }
+        personaDao.eliminarPersona(persona)
+    }
 
     override fun reportarPersonas(): LiveData<List<Persona>> {
         //delay(3000)
@@ -39,6 +47,16 @@ class PersonaRepositoryImp @Inject constructor(
             Log.i("ERRORX", "Error:"+e.message)
         }
         return personaDao.reportarPersonas()
+    }
+
+    override fun buscarPersonaId(id: Int): LiveData<Persona> {
+       return personaDao.buscarPersona(id)
+    }
+
+    override suspend fun insertarPersona(persona: Persona) {
+        CoroutineScope(Dispatchers.IO).launch {
+            dataSource.insertarPersona(persona)
+        }
     }
 
 }

@@ -125,4 +125,6 @@ dependencies {
 //SwipeRefressh
 //implementation "com.google.accompanist:accompanist-swiperefresh:0.25.0"
 
+    implementation "com.github.k0shk0sh:compose-easyforms:0.2.0"
+
 }
