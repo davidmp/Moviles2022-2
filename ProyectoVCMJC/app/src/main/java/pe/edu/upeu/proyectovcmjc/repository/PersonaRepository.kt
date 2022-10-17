@@ -17,7 +17,8 @@ interface PersonaRepository {
     suspend fun deletePersona(persona: Persona)
     fun reportarPersonas():LiveData<List<Persona>>
     fun buscarPersonaId(id:Int):LiveData<Persona>
-    suspend fun insertarPersona(persona: Persona)
+    suspend fun insertarPersona(persona: Persona):Boolean
+    suspend fun modificarRemotePersona(persona: Persona) :Boolean
 
 }
 
@@ -54,10 +55,23 @@ class PersonaRepositoryImp @Inject constructor(
        return personaDao.buscarPersona(id)
     }
 
-    override suspend fun insertarPersona(persona: Persona) {
+    override suspend fun insertarPersona(persona: Persona):Boolean{
+        var dd:Boolean=false
         CoroutineScope(Dispatchers.IO).launch {
-            dataSource.insertarPersona(TokenUtils.TOKEN_CONTENT,persona)
+            Log.i("DATA", "T:"+TokenUtils.TOKEN_CONTENT)
+            Log.i("DATA", "D:"+persona.toString())
+            dd=dataSource.insertarPersona(TokenUtils.TOKEN_CONTENT,persona).body()?.success!!
         }
+        return dd
+    }
+    override suspend fun modificarRemotePersona(persona: Persona):Boolean{
+        var dd:Boolean=false
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.i("DATA", "T:"+TokenUtils.TOKEN_CONTENT)
+            Log.i("DATA", "D:"+persona.toString())
+            dd=dataSource.actualizarPersona(TokenUtils.TOKEN_CONTENT, persona.id, persona).body()?.success!!
+        }
+        return dd
     }
 
 }
