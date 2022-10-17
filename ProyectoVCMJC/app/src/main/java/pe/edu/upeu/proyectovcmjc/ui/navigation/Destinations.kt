@@ -23,4 +23,10 @@ sealed class Destinations(
     object Pantalla4 : Destinations("pantalla4", "Pantalla 4x", Icons.Filled.Facebook )
 
     object PersonaUI: Destinations("personaUI", "Adm. Persona", Icons.Filled.Fastfood)
+
+    object PersonaForm: Destinations("personaForm?perId={perId}", "Persona Form", Icons.Filled.DynamicForm){
+        fun passId(perId:String?):String{
+            return "personaForm?perId=$perId"
+        }
+    }
 }

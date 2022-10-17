@@ -14,4 +14,6 @@ data class Persona(
     var telefono:String,
     var genero:String,
     var correo:String
-)
+){
+
+}

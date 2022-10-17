@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
+import com.google.gson.Gson
 import com.valentinilk.shimmer.shimmer
 import pe.edu.upeu.proyectovcmjc.modelo.Persona
 import pe.edu.upeu.proyectovcmjc.R
@@ -31,14 +32,20 @@ import pe.edu.upeu.proyectovcmjc.util.isInternetAvailable
 
 
 @Composable
-fun PersonaUI (viewModel: PersonaViewModel= hiltViewModel()){
+fun PersonaUI (navegarEditarPer: (String) -> Unit, viewModel: PersonaViewModel= hiltViewModel()){
     val users by viewModel.users.observeAsState(arrayListOf())
     val isLoading by viewModel.isLoading.observeAsState(false)
     MyApp(onAddClick = {
-        viewModel.addUser()
+        //viewModel.addUser()
+        navegarEditarPer((0).toString())
     }, onDeleteClick = {
         viewModel.deleteUser(it)
-    }, users, isLoading)
+    }, users, isLoading,
+        onEditClick = {
+        val jsonString = Gson().toJson(it)
+        navegarEditarPer(jsonString)
+    }
+    )
 }
 
 @Composable
@@ -47,6 +54,7 @@ fun MyApp(
     onDeleteClick: ((toDelete: Persona) -> Unit)? = null,
     personas: List<Persona>,
     isLoading: Boolean,
+    onEditClick: ((toPersona: Persona)->Unit)?=null
 ) {
     val context = LocalContext.current
     Scaffold(
@@ -113,6 +121,7 @@ fun MyApp(
                             Log.i("VERTOKEN", TokenUtils.TOKEN_CONTENT)
                             var estado = isInternetAvailable(context)
                             Log.i("CONEXION", "VEr: " + estado)
+                            onEditClick?.invoke(persona)
                         }) {
                             Icon(Icons.Filled.Edit, "Editar", tint = Color.Blue)
                         }

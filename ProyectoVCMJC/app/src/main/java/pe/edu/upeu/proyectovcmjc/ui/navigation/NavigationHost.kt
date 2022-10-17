@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import pe.edu.upeu.proyectovcmjc.ui.navigation.Destinations.*
 import pe.edu.upeu.proyectovcmjc.ui.presentation.screens.*
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import pe.edu.upeu.proyectovcmjc.ui.presentation.screens.persona.PersonaForm
 import pe.edu.upeu.proyectovcmjc.ui.presentation.screens.persona.PersonaUI
 
 
@@ -60,7 +61,21 @@ fun NavigationHost(
         }
 
         composable(Destinations.PersonaUI.route){
-            PersonaUI()
+            PersonaUI(navegarEditarPer = { newText ->
+                navController.navigate(Destinations.PersonaForm.passId(newText))
+            } )
+        }
+        composable(
+            Destinations.PersonaForm.route,
+            arguments = listOf(navArgument("perId") {
+                defaultValue =
+                    "perId"
+            })
+        ) { navBackStackEntry ->
+            var perId =
+                navBackStackEntry.arguments?.getString("perId")
+            requireNotNull(perId)
+            PersonaForm(perId, darkMode, navController)
         }
 
     }
