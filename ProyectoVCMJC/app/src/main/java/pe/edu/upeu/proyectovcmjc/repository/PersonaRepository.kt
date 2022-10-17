@@ -27,7 +27,8 @@ class PersonaRepositoryImp @Inject constructor(
 ):PersonaRepository{
     override suspend fun deletePersona(persona: Persona){
         CoroutineScope(Dispatchers.IO).launch {
-            dataSource.deletePersona(persona.id)
+            Log.i("DELETX", ""+persona.id)
+            dataSource.deletePersona(TokenUtils.TOKEN_CONTENT,persona.id)
         }
         personaDao.eliminarPersona(persona)
     }
@@ -37,7 +38,7 @@ class PersonaRepositoryImp @Inject constructor(
         try {
             CoroutineScope(Dispatchers.IO).launch {
                 delay(3000)
-                val totek=dataSource.login(User("", "davidmp@upeu.edu.pe", "d123456"))
+                val totek=dataSource.login(User("", "moises@upeu.edu.pe", "123456"))
                 TokenUtils.TOKEN_CONTENT=totek?.token_type+" "+totek?.access_token
                 Log.i("VERX", "Token:"+TokenUtils.TOKEN_CONTENT)
                 val data=dataSource.reportarPersona(TokenUtils.TOKEN_CONTENT).body()!!.data
@@ -55,7 +56,7 @@ class PersonaRepositoryImp @Inject constructor(
 
     override suspend fun insertarPersona(persona: Persona) {
         CoroutineScope(Dispatchers.IO).launch {
-            dataSource.insertarPersona(persona)
+            dataSource.insertarPersona(TokenUtils.TOKEN_CONTENT,persona)
         }
     }
 
