@@ -82,14 +82,16 @@ fun MainScreen(
     )
     Scaffold(
         scaffoldState = scaffoldState,
-        bottomBar = {
-            BottomNavigationBar(navController = navController, items = navigationItems2) },
-        floatingActionButton = { FloatingActionButton(onClick = {}) {
+        /*bottomBar = {
+            BottomNavigationBar(navController = navController, items = navigationItems2) },*/
+        /*floatingActionButton = { FloatingActionButton(onClick = {}) {
             Icon(imageVector = Icons.Default.Add, contentDescription =
             "Fab Icon")
         } },
         isFloatingActionButtonDocked = false,
-        floatingActionButtonPosition = FabPosition.End,topBar = {
+        floatingActionButtonPosition = FabPosition.End,*/
+
+        topBar = {
             TopBar(
                 scope,
                 scaffoldState,
