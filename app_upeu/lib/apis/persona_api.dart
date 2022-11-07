@@ -16,7 +16,7 @@ abstract class PersonaApi {
     dio.interceptors.add(PrettyDioLogger());
     return PersonaApi(dio);
   }
-  @POST("/api/auth/login")
+  @POST("/api/auth/login")  //davidmpx@upeu.edu.pe  //D123456
   Future<TokenModelo> login(@Body() UsuarioModelo usuario);
 
   @GET("/api/persona")
