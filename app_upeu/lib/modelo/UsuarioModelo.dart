@@ -15,7 +15,7 @@ class UsuarioModelo{
     );
   }
 
-  Map<String, dynamic> toJeson(){
+  Map<String, dynamic> toJson(){
     return{
       'name':name,
       'email':email,
@@ -43,7 +43,7 @@ class TokenModelo{
     );
   }
 
-  Map<String, dynamic> toJeson(){
+  Map<String, dynamic> toJson(){
     return{
       'status':status,
       'message':message,

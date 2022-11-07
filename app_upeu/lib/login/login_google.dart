@@ -1,8 +1,11 @@
 //import 'package:app_upeu/apis/api_beneficiario.dart';
+import 'package:app_upeu/apis/persona_api.dart';
 import 'package:app_upeu/comp/Button.dart';
 import 'package:app_upeu/comp/TextInput.dart';
 import 'package:app_upeu/drawer/navigation_home_screen.dart';
 import 'package:app_upeu/login/sign_in.dart';
+import 'package:app_upeu/modelo/UsuarioModelo.dart';
+import 'package:app_upeu/util/TokenUtil.dart';
 //import 'package:app_upeu/modelo/usuario_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,19 +17,19 @@ class MainLogin extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    /*return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.blue),
       home: LoginPage(),
-    );
-   /* return Provider<BeneficiarioApi>(create: (_)=>BeneficiarioApi.create(),
+    );*/
+    return Provider<PersonaApi>(create: (_)=>PersonaApi.create(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primaryColor: Colors.blue),
         home: LoginPage(),
       ),
 
-    );*/
+    );
   }
 
 }
@@ -97,10 +100,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Button(
               label: 'Ingresar',
-              onTap: (){
 
-              }
-              /*onTap: () async{
+              onTap: () async{
                 WidgetsFlutterBinding.ensureInitialized();
                 Firebase.initializeApp();
                 if (_formKey.currentState.validate() && _controllerUser.text!="") {
@@ -108,17 +109,16 @@ class _LoginPageState extends State<LoginPage> {
 
                   final prefs= await SharedPreferences.getInstance();
 
-                  final api=Provider.of<BeneficiarioApi>(context,listen: false);
-                  final user=UsuarioModel();
-                  user.username=_controllerUser.text;
+                  final api=Provider.of<PersonaApi>(context,listen: false);
+                  final user=UsuarioModelo();
+                  user.email=_controllerUser.text;
                   user.password=_controllerPass.text;
                   bool ingreso=false;
                   api.login(user).then((value){
-                    token="JWT "+value.access_token;
+                    token=value.token_type+" "+value.access_token;
                     prefs.setString("token", token);
+                    TokenUtil.TOKEN=token;
                     ingreso=true;
-                    print("Aqui llego");
-                    print(token);
                     if(ingreso==true){
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                   });
 
                 }
-              }*/,
+              },
             ),
           ],
         ),
