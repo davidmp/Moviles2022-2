@@ -6,6 +6,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
+
 part 'persona_api.g.dart';
 
 @RestApi(baseUrl: UrlApi.urlApix)

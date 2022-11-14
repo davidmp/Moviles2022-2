@@ -5,8 +5,10 @@ import 'package:json_annotation/json_annotation.dart';
 class PersonaModelo{
   int id=0;
   String dni, nombre,apellido_paterno,apellido_materno, telefono,genero,correo;
+
   PersonaModelo({this.id, this.dni, this.nombre, this.apellido_paterno,
     this.apellido_materno, this.telefono, this.genero, this.correo});
+
   factory PersonaModelo.fromJson(Map<String, dynamic> map){
     return PersonaModelo(
       id: map['id'] as int,
@@ -19,6 +21,7 @@ class PersonaModelo{
       correo: map['correo'],
     );
   }
+
   Map<String, dynamic> toJson(){
     return{
       'id':id,
@@ -31,6 +34,7 @@ class PersonaModelo{
       'correo':correo,
     };
   }
+
   @override
   String toString() {
     return 'PersonaModelo{id: $id,dni: $dni, nombre: $nombre, apellido_paterno: $apellido_paterno,apellido_materno: $apellido_materno, telefono: $telefono, genero: $genero, correo:$correo}';
@@ -42,7 +46,9 @@ class ResponseModelo{
   bool success;
   List<PersonaModelo> data;
   String message;
+
   ResponseModelo({this.success, this.data, this.message});
+
   factory ResponseModelo.fromJson(Map<String, dynamic> map){
     return ResponseModelo(
       success: map['success'] as bool,
