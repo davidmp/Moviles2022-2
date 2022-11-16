@@ -2,8 +2,9 @@
 import 'package:app_upeu/bloc/persona/persona_bloc.dart';
 import 'package:app_upeu/comp/TabItem.dart';
 import 'package:app_upeu/repository/PersonaRepository.dart';
-import 'package:app_upeu/ui/persona/persona_edit.dart';
-import 'package:app_upeu/ui/persona/persona_form.dart';
+
+import 'package:app_upeu/ui/personab/persona_edit.dart';
+import 'package:app_upeu/ui/personab/persona_form.dart';
 import 'package:flutter/material.dart';
 import 'package:app_upeu/modelo/PersonaModelo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,7 +81,7 @@ class _PersonaUIState extends State<PersonaUI> {
 
         appBar: new AppBar(
           title: Text(
-            'Lista de Personas',
+            'Lista de PersonasB',
           ),
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -106,7 +107,7 @@ class _PersonaUIState extends State<PersonaUI> {
                   print("Si funciona 2");
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PersonaForm()),
+                    MaterialPageRoute(builder: (context) => PersonaFormB()),
                   ).then(onGoBack);
                 },
                 child: Icon(Icons.add_box_sharp),
@@ -210,7 +211,7 @@ class _PersonaUIState extends State<PersonaUI> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => PersonaFormEdit(
+                                          builder: (context) => PersonaFormEditB(
                                               modelP: personax)),
                                     ).then(onGoBack);
                                   }),
@@ -251,7 +252,7 @@ class _PersonaUIState extends State<PersonaUI> {
                                             .deletePersona(TokenUtil.TOKEN,personax.id)
                                             .then((value) => onGoBack(value));*/
                                         //var onGoBack = onGoBack;
-                                        //BlocProvider.of<ProductosBloc>(context).add(DeleteProductoEvent(producto: state.productosList[index]));
+                                        BlocProvider.of<PersonaBloc>(context).add(DeletePersonaEvent(persona:personax));
                                       }
                                     });
                                   })

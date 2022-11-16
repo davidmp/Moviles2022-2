@@ -1,19 +1,27 @@
 import 'dart:async';
 import 'package:app_upeu/apis/persona_api.dart';
 import 'package:app_upeu/modelo/PersonaModelo.dart';
+import 'package:app_upeu/util/NetworConnection.dart';
 import 'package:app_upeu/util/TokenUtil.dart';
+import 'package:app_upeu/local/dao/PersonaDao.dart';
 import 'package:dio/dio.dart';
 class PersonaRepository {
   PersonaApi personaApi;
+  PersonaLocate personaLocate;
 
   PersonaRepository() {
     Dio _dio = Dio();
     _dio.options.headers["Content-Type"] = "application/json";
     personaApi = PersonaApi(_dio);
+    personaLocate=PersonaLocate();
   }
 
   Future<List<PersonaModelo>> getPersona() async {
+    if(await isConected()){
     return await personaApi.getPersona(TokenUtil.TOKEN).then((value) => value.data);
+    }else{
+      return await personaLocate.getAllPersona();
+    }
   }
 
   Future<ResponseModelo> deletePersona(int id) async {
@@ -25,6 +33,11 @@ class PersonaRepository {
   }
 
   Future<ResponseModelo> createPersona(PersonaModelo persona) async {
+    if(await isConected()){
     return await personaApi.createPersona(TokenUtil.TOKEN, persona);
+    }else{
+      personaLocate.insertPersona(persona);
+      return await ResponseModelo();
+    }
   }
 }

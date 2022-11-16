@@ -1,5 +1,6 @@
 
 import 'package:app_upeu/apis/persona_api.dart';
+import 'package:app_upeu/bloc/persona/persona_bloc.dart';
 import 'package:app_upeu/theme/AppTheme.dart';
 import 'package:app_upeu/modelo/PersonaModelo.dart';
 import 'package:app_upeu/util/TokenUtil.dart';
@@ -7,6 +8,7 @@ import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class PersonaFormB extends StatefulWidget {
@@ -257,7 +259,11 @@ class _PersonaFormState extends State<PersonaFormB> {
                                 mp.telefono = _telefono;
                                 mp.genero = _genero;
                                 mp.correo=_correo;
-                                var api = await Provider.of<PersonaApi>(
+                                BlocProvider.of<PersonaBloc>(context).add(CreatePersonaEvent(persona:mp));
+                                Navigator.pop(context, () {
+                                  setState(() {});
+                                });
+                                /*var api = await Provider.of<PersonaApi>(
                                     context,
                                     listen: false)
                                     .createPersona(TokenUtil.TOKEN,mp);
@@ -268,7 +274,7 @@ class _PersonaFormState extends State<PersonaFormB> {
                                     setState(() {});
                                   });
                                   // Navigator.push(context, MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
-                                }
+                                }*/
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
