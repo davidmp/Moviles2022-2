@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pe.edu.upeu.app_upeu">
+    package="pe.edu.upeu.app_upeudmp">
    <application
         android:label="app_upeu"
         android:name="${applicationName}"
