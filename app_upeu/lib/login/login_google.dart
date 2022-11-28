@@ -150,18 +150,20 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () async {
         final prefs= await SharedPreferences.getInstance();
 
-        /*signInWithGoogle().then((result) {
+        signInWithGoogle().then((result) {
           if (result != null) {
+            print("Entro Google");
             WidgetsFlutterBinding.ensureInitialized();
             Firebase.initializeApp();
-            final api=Provider.of<BeneficiarioApi>(context,listen: false);
-            final user=UsuarioModel();
-            user.username="davidmpx";
-            user.password="Davidmpx1";
+            final api=Provider.of<PersonaApi>(context,listen: false);
+            final user=UsuarioModelo();
+            user.email="moises@upeu.edu.pe";
+            user.password="123456";
             api.login(user).then((value){
-              token="JWT "+value.access_token;
+              token=value.token_type+" "+value.access_token;
               prefs.setString("token", token);
-              print(token);
+              TokenUtil.TOKEN=token;
+
             }).catchError((onError){
               print(onError.toString());
             });
@@ -175,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
           }else{
             print("Errro!!");
           }
-        });*/
+        });
 
 
       },
@@ -193,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                'Ingresar VinMenX',
+                'Ingresar Google',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.grey,

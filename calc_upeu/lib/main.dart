@@ -1,4 +1,6 @@
 // @dart=2.9
+import 'package:calc_upeu/comp/CustomAppBar.dart';
+import 'package:calc_upeu/theme/AppTheme.dart';
 import 'package:flutter/material.dart';
 import './comp/CalcButton.dart';
 import 'dart:math';
@@ -8,33 +10,10 @@ class CalcApp extends StatefulWidget {
   @override
   CalcAppState createState() => CalcAppState();
 }
-const Color m3BaseColorD = Color(0xff99ff05);
-const Color m3BaseColor = Color(0xff6750a4);
-const List<Color> colorOptions = [
-  m3BaseColor,
-  m3BaseColorD,
-  Colors.blue,
-  Colors.teal,
-  Colors.green,
-  Colors.yellow,
-  Colors.orange,
-  Colors.pink
-];
-const List<String> colorText = <String>[
-  "M3 Baseline",
-  "M3 BaselineD",
-  "Blue",
-  "Teal",
-  "Green",
-  "Yellow",
-  "Orange",
-  "Pink",
-];
+
+
 class CalcAppState extends State<CalcApp> {
-  bool useMaterial3 = true;
-  bool useLightMode = true;
-  int colorSelected = 0;
-  ThemeData themeData;
+
   String valorAnt = '';
   String operador = '';
   TextEditingController _controller = new TextEditingController();
@@ -78,6 +57,12 @@ class CalcAppState extends State<CalcApp> {
     });
   }
 
+  void accion(){
+    setState(() {
+      print("");
+    });
+  }
+
 //Aqui codigo
   void resultOperacion(String text) {
     setState(() {
@@ -118,18 +103,14 @@ class CalcAppState extends State<CalcApp> {
       [numClick,numClick, numClick,opeClick ],
       [numClick,numClick, numClick,opeClick ],
       [numClick,numClick, numClick,resultOperacion ]];
-
+    AppTheme.colorX=Colors.blue;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Calculator',
-      themeMode: useLightMode ? ThemeMode.light : ThemeMode.dark,
-      theme: themeData,
-      /*theme:ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),*/
+      themeMode: AppTheme.useLightMode ? ThemeMode.light : ThemeMode.dark,
+      theme: AppTheme.themeData,
       home: Scaffold(
-        appBar: createAppBar(),
+        appBar: CustomAppBar(accionx: accion as Function),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(20),
           child: Column(
@@ -165,80 +146,6 @@ class CalcAppState extends State<CalcApp> {
           ),
         ),
       ),
-    );
-  }
-
-  @override
-  initState() {
-    super.initState();
-    themeData = updateThemes(colorSelected, useMaterial3, useLightMode);
-  }
-  ThemeData updateThemes(int colorIndex, bool useMaterial3, bool useLightMode) {
-    return ThemeData(
-        colorSchemeSeed: colorOptions[colorSelected],
-        useMaterial3: useMaterial3,
-        brightness: useLightMode ? Brightness.light : Brightness.dark);
-  }
-  void handleBrightnessChange() {
-    setState(() {
-      useLightMode = !useLightMode;
-      themeData = updateThemes(colorSelected, useMaterial3, useLightMode);
-    });
-  }
-  void handleMaterialVersionChange() {
-    setState(() {
-      useMaterial3 = !useMaterial3;
-      themeData = updateThemes(colorSelected, useMaterial3, useLightMode);
-    });
-  }
-  void handleColorSelect(int value) {
-    setState(() {
-      colorSelected = value;
-      themeData = updateThemes(colorSelected, useMaterial3, useLightMode);
-    });
-  }
-
-  PreferredSizeWidget createAppBar() {
-    return AppBar(
-      title: useMaterial3 ? const Text("Material 3") : const Text("Material 2"),
-      actions: [
-        IconButton(
-          icon: useLightMode? const Icon(Icons.wb_sunny_outlined): const Icon(Icons.wb_sunny),
-          onPressed: handleBrightnessChange,
-          tooltip: "Toggle brightness",
-        ),
-        IconButton(
-          icon: useMaterial3? const Icon(Icons.filter_3): const Icon(Icons.filter_2),
-          onPressed: handleMaterialVersionChange,
-          tooltip: "Switch to Material ${useMaterial3 ? 2 : 3}",
-        ),
-        PopupMenuButton(
-          icon: const Icon(Icons.more_vert),
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          itemBuilder: (context) {
-            return List.generate(colorOptions.length, (index) {
-              return PopupMenuItem(
-                  value: index,
-                  child: Wrap(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Icon(
-                          index == colorSelected? Icons.color_lens: Icons.color_lens_outlined,
-                          color: colorOptions[index],
-                        ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Text(colorText[index]))
-                    ],
-                  ));
-            });
-          },
-          onSelected: handleColorSelect,
-        ),
-      ],
     );
   }
 

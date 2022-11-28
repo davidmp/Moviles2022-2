@@ -81,7 +81,7 @@ class _PersonaUIState extends State<PersonaUI> {
 
         appBar: new AppBar(
           title: Text(
-            'Lista de PersonasB',
+            'Lista de PersonasF',
           ),
           automaticallyImplyLeading: false,
           centerTitle: true,
