@@ -243,6 +243,7 @@ class _PersonaFormEditState extends State<PersonaFormEditB> {
                                 //mp.fechaNac = _fecha_nac;
                                 mp.genero = _genero;
                                 mp.correo=_correo;
+                                mp.id=modelP.id;
 
                                 print("IDX: $modelP.id");
 
