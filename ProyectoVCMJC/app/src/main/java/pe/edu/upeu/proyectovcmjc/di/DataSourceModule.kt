@@ -8,8 +8,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import pe.edu.upeu.proyectovcmjc.data.local.DbDataSource
+import pe.edu.upeu.proyectovcmjc.data.local.dao.MatriculaDao
 import pe.edu.upeu.proyectovcmjc.data.local.dao.PersonaDao
 import pe.edu.upeu.proyectovcmjc.data.remote.RestDataSource
+import pe.edu.upeu.proyectovcmjc.data.remote.RestMatricula
+import pe.edu.upeu.proyectovcmjc.util.TokenUtils
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
@@ -22,7 +25,7 @@ class DataSourceModule {
     @Singleton
     @Provides
     @Named("BaseUrl")
-    fun provideBaseUrl()="http://172.23.11.22:8000/"
+    fun provideBaseUrl()= TokenUtils.API_URL  //"http://192.168.1.124:8001/"
 
     @Singleton
     @Provides
@@ -31,9 +34,12 @@ class DataSourceModule {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(baseUrl).build()
     }
+    //Similar a estos
     @Singleton
     @Provides
-    fun restDataSource(retrofit: Retrofit):RestDataSource = retrofit.create(RestDataSource::class.java)
+    fun restDataSource(retrofit: Retrofit):RestDataSource{
+        return retrofit.create(RestDataSource::class.java)
+    }
 
     @Singleton
     @Provides
@@ -44,6 +50,22 @@ class DataSourceModule {
 
     @Singleton
     @Provides
-    fun personaDao(db:DbDataSource):PersonaDao=db.personaDao()
+    fun personaDao(db:DbDataSource):PersonaDao{
+        return db.personaDao();
+    }
+
+
+    @Singleton
+    @Provides
+    fun restMatricula(retrofit: Retrofit):RestMatricula{
+        return retrofit.create(RestMatricula::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun matriculaDao(db:DbDataSource):MatriculaDao{
+        return db.matriculaDao();
+    }
+
 
 }

@@ -22,11 +22,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.google.gson.Gson
 import com.valentinilk.shimmer.shimmer
 import pe.edu.upeu.proyectovcmjc.modelo.Persona
 import pe.edu.upeu.proyectovcmjc.R
+import pe.edu.upeu.proyectovcmjc.ui.navigation.Destinations
+import pe.edu.upeu.proyectovcmjc.ui.presentation.components.BottomNavigationBar
 import pe.edu.upeu.proyectovcmjc.util.TokenUtils
 import pe.edu.upeu.proyectovcmjc.util.isInternetAvailable
 
@@ -34,7 +38,12 @@ import pe.edu.upeu.proyectovcmjc.util.isInternetAvailable
 @Composable
 fun PersonaUI (navegarEditarPer: (String) -> Unit, viewModel: PersonaViewModel= hiltViewModel()){
     val users by viewModel.users.observeAsState(arrayListOf())
+    val usersmat by viewModel.usersmat.observeAsState(arrayListOf())
     val isLoading by viewModel.isLoading.observeAsState(false)
+
+    Log.i("VERX", ""+users!!.size )
+    Log.i("VERX2", ""+usersmat!!.size )
+
     MyApp(onAddClick = {
         //viewModel.addUser()
         navegarEditarPer((0).toString())
@@ -57,7 +66,22 @@ fun MyApp(
     onEditClick: ((toPersona: Persona)->Unit)?=null
 ) {
     val context = LocalContext.current
+    val navController = rememberNavController()
+    val navigationItems2 = listOf(
+        Destinations.Pantalla1,
+        Destinations.Pantalla2,
+        Destinations.Pantalla3,
+        Destinations.PantallaQR
+    )
+    val scaffoldState = rememberScaffoldState(
+        drawerState = rememberDrawerState(initialValue =
+        DrawerValue.Closed)
+    )
     Scaffold(
+        scaffoldState = scaffoldState,
+        bottomBar = {
+            BottomNavigationBar(navController = navController, items = navigationItems2)
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 onAddClick?.invoke()

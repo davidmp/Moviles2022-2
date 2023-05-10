@@ -35,11 +35,10 @@ class PersonaRepositoryImp @Inject constructor(
     }
 
     override fun reportarPersonas(): LiveData<List<Persona>> {
-        //delay(3000)
         try {
             CoroutineScope(Dispatchers.IO).launch {
                 delay(3000)
-                val totek=dataSource.login(User("", "moises@upeu.edu.pe", "123456"))
+                val totek=dataSource.login(User("", "davidmp@upeu.edu.pe", "12345678"))
                 TokenUtils.TOKEN_CONTENT=totek?.token_type+" "+totek?.access_token
                 Log.i("VERX", "Token:"+TokenUtils.TOKEN_CONTENT)
                 val data=dataSource.reportarPersona(TokenUtils.TOKEN_CONTENT).body()!!.data

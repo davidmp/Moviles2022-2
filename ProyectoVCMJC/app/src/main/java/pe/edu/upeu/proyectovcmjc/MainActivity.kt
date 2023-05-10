@@ -118,6 +118,7 @@ fun MainScreen(
         },
         drawerContent = { Drawer(scope, scaffoldState, navController,
             items = navigationItems) },
+
         drawerGesturesEnabled = true
     ){
         NavigationHost(navController, darkMode)
